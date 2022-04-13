@@ -1,6 +1,7 @@
 
 <script setup>
 import Movie from './Movie.vue';
+import Tv from './Tv.vue';
 import axios from 'axios'
 
 import "swiper/css";
@@ -10,6 +11,7 @@ import { onMounted, ref } from 'vue'
 const windowWidth = ref(null)
 
 const movies = ref({})
+const tv_s = ref({})
 axios
   .get('https://api.themoviedb.org/3/trending/movie/day?api_key=a67aeb2a76989aba8a19ccda9d5879ba')
   .then((res) => {
@@ -25,6 +27,30 @@ axios
   .get('https://api.themoviedb.org/3/movie/popular?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&page=1')
   .then((res) => {
     movies.value.Popular = res.data.results
+  })
+axios
+  .get('https://api.themoviedb.org/3/movie/upcoming?api_key=a67aeb2a76989aba8a19ccda9d5879ba')
+  .then((res) => {
+    movies.value.UpComing = res.data.results
+  })
+
+// tv
+
+axios
+  .get('https://api.themoviedb.org/3/trending/tv/day?api_key=a67aeb2a76989aba8a19ccda9d5879ba')
+  .then((res) => {
+    tv_s.value.Trending = res.data.results
+  })
+
+axios
+  .get('https://api.themoviedb.org/3/tv/top_rated?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&page=1')
+  .then((res) => {
+    tv_s.value['Top Rated'] = res.data.results
+  })
+axios
+  .get('https://api.themoviedb.org/3/tv/popular?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&page=1')
+  .then((res) => {
+    tv_s.value.Popular = res.data.results
   })
 
 // get detail movie
@@ -55,7 +81,7 @@ axios
     spider.value = res.data
   })
 axios
-  .get(`https://api.themoviedb.org/3/movie/505026?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
+  .get(`https://api.themoviedb.org/3/tv/latest?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
   .then((res) => {
     death_on_the_nile.value = res.data
   })
@@ -112,7 +138,8 @@ axios
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide :style="{ 'background-image': `url(https://i.ibb.co/qsTFNQW/Batman-And-Catwoman-In-The-Batman-Movie-2022-Ji-G.jpg)` }">
+      <swiper-slide
+        :style="{ 'background-image': `url(https://i.ibb.co/qsTFNQW/Batman-And-Catwoman-In-The-Batman-Movie-2022-Ji-G.jpg)` }">
         <div class="movies-info">
           <div class="left">
             <h1>{{ the_batman.title }}</h1>
@@ -189,7 +216,8 @@ axios
       </swiper-slide>
     </swiper>
   </div>
-  <Movie v-for="(movie, title) in movies" :movie="movie" :title="title" :key="movie.id" />
+  <Movie v-for="(movie, title) in movies" :movie="movie" :title="title" :key="movie" />
+  <Tv v-for="(tv, title) in tv_s" :movie="tv" :title="title" :key="tv" />
 </template>
 
 <style lang="scss" scoped>

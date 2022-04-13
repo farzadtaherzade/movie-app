@@ -23,7 +23,7 @@ onMounted(() => {
 })
 
 axios
-    .get(`https://api.themoviedb.org/3/movie/${paramsId}?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
+    .get(`https://api.themoviedb.org/3/tv/${paramsId}?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
     .then((res) => {
         moviesData.value = res.data
         console.log(moviesData.value)
@@ -32,7 +32,7 @@ axios
 
 </script>
 
-<template>
+ <template>
     <div class="detail" v-if="isLoaded">
         <div class="banner-movies"
             :style="{ 'background-image': `url(https://image.tmdb.org/t/p/w500${moviesData.backdrop_path})` }"></div>
@@ -41,7 +41,7 @@ axios
 
             <div class="right">
                 <div class="title-save-movie">
-                    <h1>{{ moviesData.title }}</h1>
+                    <h1>{{ moviesData.name }}</h1>
                     <div class="imdb-wrap">
                         <p>
                             {{ moviesData.vote_average }}
@@ -54,23 +54,39 @@ axios
                     </div>
                 </div>
                 <h2>Tagline: "{{ moviesData.tagline }}"</h2>
-                <h2>Duration: {{ moviesData.runtime }} minutes</h2>
+                <div class="networks">
+                    <h2>Networks: </h2>
+                    <h3 v-for="networks in moviesData.networks" :key="networks.id">
+                        {{ networks.name }}<span></span>
+                    </h3>
+                </div>
+                <div class="episode-runtime">
+                    <h2>Episode Runtim : </h2>
+                    <div class="h3" v-for="episode_run_time in moviesData.episode_run_time" :key="episode_run_time.id">
+                        <h3> {{
+                            episode_run_time
+                        }}
+                        </h3>
+                        <span></span>
+                    </div>
+                    Minutes
+                </div>
                 <h2>
                     Released: {{
-                        new Date(moviesData.release_date).toLocaleString('en-us', {
+                        new Date(moviesData.last_air_date).toLocaleString('en-us', {
                             month: 'long',
                             day: 'numeric',
                             year: 'numeric'
                         })
                     }}
                 </h2>
-                <!-- <h2>Director: Adrian Lyne</h2> -->
-                <h2>Revenue: {{
+
+                <!-- <h2>Revenue: {{
                     moviesData.revenue.toLocaleString('en-us', {
                         style: 'currency',
                         currency: 'USD'
                     })
-                }}</h2>
+                }}</h2> -->
                 <h2>Overview: {{ moviesData.overview }}</h2>
                 <div class="button">
                     <button class="add-fav"> <img :src="PlaySvg" alt="PlaySvg" style=""> <strong>WATCH
@@ -83,8 +99,6 @@ axios
         </div>
         <!-- <div class="cast-slider">dasjkhgdas</div> -->
     </div>
-    <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis sint voluptatum, rem ex sunt distinctio. Quos
-    harum illum dolore saepe pariaturdasd. Ut quia quaerat laboriosam ipsam facilis, dolorem laborum repellendus? -->
     <Loading v-if="!isLoaded" />
 </template>
 
@@ -157,12 +171,12 @@ axios
 
         .banner {
             max-width: 250px;
-            height: 100%;
+            height: fit-content;
             border-radius: 25px;
 
             @media (min-width:1028px) {
+                // height: 35rem;
                 max-width: 350px;
-
             }
         }
 
@@ -294,9 +308,9 @@ axios
                 }
 
                 h1 {
-                    color: #fff;
                     font-weight: bold;
                     font-size: 2rem;
+                    color: #fff;
 
                     @media (min-width:1028px) {
                         font-size: 3rem;
@@ -310,6 +324,37 @@ axios
 
                 @media (min-width:1028px) {
                     font-size: 20px;
+                }
+            }
+
+            .networks,
+            .episode-runtime {
+                display: flex;
+                align-items: center;
+                margin-bottom: 2rem;
+
+                h2 {
+                    margin-bottom: 0;
+                    margin-right: 5px;
+                }
+
+
+                .h3:not(:last-child) {
+                    display: flex;
+                    h3 {
+                        display: flex;
+                        align-items: center;
+    
+                    }
+                    span::after {
+                        content: "-";
+                        background-clip: #fff;
+                        display: inline-block;
+                    }
+                }
+                .h3:last-child {
+                    margin-right: 5px;
+
                 }
             }
         }

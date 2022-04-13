@@ -1,7 +1,7 @@
 <template>
   <div class="slider">
     <div class="title-all">
-      <h1 class="movie-showCase-title">{{ props.title }} Movies</h1>
+      <h1 class="movie-showCase-title">{{ props.title }} TV</h1>
       <h3>View all</h3>
     </div>
     <div class="swiper-wrapper">
@@ -9,7 +9,7 @@
         :slidesPerView="slides"
         :spaceBetween="spaceSlides"
         :slidesPerGroup="1"
-        :loop="true"
+        :loop="false"
         :pagination="{
           clickable: true,
         }"
@@ -37,7 +37,7 @@
             </div>
           </div>
           <div class="link">
-            <router-link :to="{ name: 'detailpage', params: { id: movies.id } }">
+            <router-link :to="{ name: 'Tvdetailpage', params: { id: movies.id } }">
               <img src="../assets/icons/play.png" class="play-icon" alt="see movie" />
             </router-link>
           </div>
