@@ -15,7 +15,7 @@
         }"
         :navigation="false"
         class="mySwiper"
-      >
+      > 
         <swiper-slide v-for="movies in props.movie" :key="movies.id">
           <!-- {{movies}} -->
           <img

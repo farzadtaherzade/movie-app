@@ -4,26 +4,26 @@
             <form class="form" @submit.prevent="doSearch">
                 <div class="search">
                     <img src="../assets/icons/icons8-search.svg" class="search-icon" alt="search-icon">
-                    <input type="text" class="Search" placeholder="Search movie" v-model="searchMvoie" />
+                    <input type="text" class="Search" placeholder="Search tv" v-model="searchTv" />
                 </div>
-                <h2>Movies</h2>
+                <h2>Tv searies</h2>
             </form>
         </div>
         <div class="movies" v-if="!resultPage">
             <div class="movie" v-for="(movie, index) in movies" :key="index">
-                <router-link :to="{ name: 'detailpage', params: { id: `${movie.id}` } }"><img
-                        :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" :alt="movie.title">
+                <router-link :to="{ name: 'Tvdetailpage', params: { id: `${movie.id}` } }"><img
+                        :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" :alt="movie.name">
                 </router-link>
-                <router-link class="link" :to="{ name: 'detailpage', params: { id: `${movie.id}` } }">{{ movie.title }}
+                <router-link class="link" :to="{ name: 'Tvdetailpage', params: { id: `${movie.id}` } }">{{ movie.name }}
                 </router-link>
             </div>
         </div>
         <div class="movies" v-if="resultPage">
             <div class="movie" v-for="(movie, index) in searchResult.results" :key="index">
-                <router-link :to="{ name: 'detailpage', params: { id: `${movie.id}` } }"><img
-                        :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" :alt="movie.title">
+                <router-link :to="{ name: 'Tvdetailpage', params: { id: `${movie.id}` } }"><img
+                        :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" :alt="movie.name">
                 </router-link>
-                <router-link class="link" :to="{ name: 'detailpage', params: { id: `${movie.id}` } }">{{ movie.title }}
+                <router-link class="link" :to="{ name: 'Tvdetailpage', params: { id: `${movie.id}` } }">{{ movie.name }}
                 </router-link>
             </div>
         </div>
@@ -69,7 +69,7 @@ const isLoading = ref(false)
 const resultPage = ref(false)
 
 const movies = ref(null)
-const searchMvoie = ref('')
+const searchTv = ref('')
 const searchResult = ref('')
 
 
@@ -81,7 +81,7 @@ function clickCallback(pageNum) {
     page.value = pageNum
 
     axios
-        .get(`https://api.themoviedb.org/3/movie/now_playing?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&page=${page.value}`)
+        .get(`https://api.themoviedb.org/3/tv/on_the_air?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&page=${page.value}`)
         .then((res) => {
             movies.value = res.data.results
             isLoading.value = true
@@ -93,7 +93,7 @@ function clickCallbackSearch(pageNum) {
     page.value = pageNum
 
     axios
-        .get(`https://api.themoviedb.org/3/search/movie?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&query=${searchMvoie.value}&page=${page.value}`)
+        .get(`https://api.themoviedb.org/3/search/tv?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&query=${searchTv.value}&page=${page.value}`)
         .then((res) => {
             searchResult.value = res.data
             isLoading.value = true
@@ -102,16 +102,17 @@ function clickCallbackSearch(pageNum) {
 
 }
 function doSearch() {
-    if (searchMvoie.value != "") {
+    if (searchTv.value != '') {
         isLoading.value = false
 
         axios
-            .get(`https://api.themoviedb.org/3/search/movie?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&query=${searchMvoie.value}&page=1`)
+            .get(`https://api.themoviedb.org/3/search/tv?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US&query=${searchTv.value}&page=1`)
             .then((res) => {
                 searchResult.value = res.data
                 isLoading.value = true
                 resultPage.value = true
             })
+
     }
 }
 

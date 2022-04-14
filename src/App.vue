@@ -33,6 +33,7 @@ a , li{
 #app {
   background-color: #100f10;
   min-height: 100vh;
+  position: relative;
 }
 
 .container {

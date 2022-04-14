@@ -3,7 +3,7 @@ import Loading from '../components/Loading.vue'
 import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import axios from 'axios';
-
+import CreditsMovieSlider from '../components/CreditsMovieSlider.vue'
 //logo
 import PlaySvg from '@/assets/icons/play2.svg'
 
@@ -13,7 +13,8 @@ const paramsId = route.params.id
 const isLoaded = ref(false)
 
 const moviesData = ref();
-
+const moviesTrailer = ref();
+const credits = ref()
 onMounted(() => {
     document.onreadystatechange = () => {
         if (document.readystate == 'complete') {
@@ -26,16 +27,26 @@ axios
     .get(`https://api.themoviedb.org/3/movie/${paramsId}?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
     .then((res) => {
         moviesData.value = res.data
-        console.log(moviesData.value)
         isLoaded.value = true
     })
 
+axios
+    .get(`https://api.themoviedb.org/3/movie/${paramsId}/videos?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
+    .then((res) => {
+        moviesTrailer.value = res.data.results[Math.floor(Math.random() * res.data.results.length)].key
+    })
+axios
+    .get(`https://api.themoviedb.org/3/movie/${paramsId}/credits?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
+    .then((res) => {
+        credits.value = res.data.cast.slice(0, 20)
+    })
 </script>
 
 <template>
-    <div class="detail" v-if="isLoaded">
         <div class="banner-movies"
-            :style="{ 'background-image': `url(https://image.tmdb.org/t/p/w500${moviesData.backdrop_path})` }"></div>
+            :style="{ 'background-image': `url(https://image.tmdb.org/t/p/w500${moviesData.backdrop_path})` }">
+            </div>
+    <div class="detail" v-if="isLoaded">
         <div class="movies-detail-wrapper">
             <img :src="`https://image.tmdb.org/t/p/w500${moviesData.poster_path}`" alt class="banner" />
 
@@ -73,68 +84,70 @@ axios
                 }}</h2>
                 <h2>Overview: {{ moviesData.overview }}</h2>
                 <div class="button">
-                    <button class="add-fav"> <img :src="PlaySvg" alt="PlaySvg" style=""> <strong>WATCH
-                            TRAILER</strong></button>
+                    <a :href="`https://www.youtube.com/watch?v=${moviesTrailer}`" target="_blank" class="watch-trailer">
+                        <img :src="PlaySvg" alt="PlaySvg" style=""> <strong>WATCH
+                            TRAILER</strong></a>
                     <button class="btn-add">
                         <span></span>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- <div class="cast-slider">dasjkhgdas</div> -->
+    <CreditsMovieSlider :credits="credits" />
     </div>
-    <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis sint voluptatum, rem ex sunt distinctio. Quos
-    harum illum dolore saepe pariaturdasd. Ut quia quaerat laboriosam ipsam facilis, dolorem laborum repellendus? -->
     <Loading v-if="!isLoaded" />
 </template>
 
 <style lang="scss" scoped>
+.banner-movies {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    background-size: cover;
+    background-color: #fff;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.4));
+    background-repeat: no-repeat;
+    background-position: center;
+    // box-shadow: -5px 5px -5px -1px rgba(0, 0, 0, 1);
+
+    @media (max-width:1028px) {
+        height: 60vh;
+        background-position: center;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: #000000, $alpha: 0.6);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background-image: linear-gradient(to top, #0f0f0f, rgba(#000, 0));
+    }
+}
+
 .detail {
 
     width: 100%;
-    min-height: 158vh;
+    min-height: 100vh;
+    margin-top: -300px;
 
-    @media (min-width:1028px) {
+    @media (min-width:1030px) {
+        margin-top: -340px;
         min-height: 100vh;
     }
 
-    .banner-movies {
-        position: relative;
-        width: 100%;
-        height: 50vh;
-        background-size: cover;
-        background-color: #fff;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.3),
-                rgba(0, 0, 0, 0.4));
-        background-repeat: no-repeat;
-        background-position: center;
-        // box-shadow: -5px 5px -5px -1px rgba(0, 0, 0, 1);
-
-        @media (max-width:1028px) {
-            height: 60vh;
-            background-position: center;
-        }
-
-        &::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba($color: #000000, $alpha: 0.6);
-        }
-
-        &::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background-image: linear-gradient(to top, #0f0f0f, rgba(#000, 0));
-        }
-    }
 
     .movies-detail-wrapper {
         position: relative;
@@ -142,15 +155,13 @@ axios
         display: flex;
         align-items: center;
         flex-direction: column;
-        position: absolute;
-        top: 90px;
 
 
         padding: 0px 10%;
 
         @media (min-width:1028px) {
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             flex-direction: row;
             top: 120px;
         }
@@ -210,7 +221,7 @@ axios
                 display: flex;
                 align-items: center;
 
-                .add-fav {
+                .watch-trailer {
                     display: flex;
                     align-items: center;
                     background-color: #fff;

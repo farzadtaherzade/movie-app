@@ -8,9 +8,9 @@
 
                 <ul v-show="!mobile">
                     <router-link :to="{ name: 'home' }" class="link">Home</router-link>
-                    <router-link to="/movies" class="link">Movies</router-link>
-                    <router-link to="/movies" class="link">Tv Series</router-link>
-                    <router-link to="/movies" class="link">Artists</router-link>
+                    <router-link :to="{ name: 'movies' }" class="link">Movies</router-link>
+                    <router-link :to="{ name: 'tv' }" class="link">Tv Series</router-link>
+                    <router-link :to="{ name: 'artists' }" class="link">Artists</router-link>
                 </ul>
             </div>
 
@@ -26,9 +26,9 @@
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="mobile-nav">
                     <router-link :to="{ name: 'home' }" class="link">Home</router-link>
-                    <router-link to="/movies" class="link">Movies</router-link>
-                    <router-link to="/movies" class="link">Tv Series</router-link>
-                    <router-link to="/movies" class="link">Artists</router-link>
+                    <router-link :to="{ name: 'movies' }" class="link">Movies</router-link>
+                    <router-link :to="{ name: 'tv' }" class="link">Tv Series</router-link>
+                    <router-link :to="{ name: 'artists' }" class="link">Artists</router-link>
                     <router-link to="/movies" class="link">SIGNUP</router-link>
                     <router-link to="/movies" class="link">SIGNIN</router-link>
                 </ul>
