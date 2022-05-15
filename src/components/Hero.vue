@@ -81,7 +81,7 @@ axios
     spider.value = res.data
   })
 axios
-  .get(`https://api.themoviedb.org/3/tv/latest?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
+  .get(`https://api.themoviedb.org/3/movie/505026?api_key=a67aeb2a76989aba8a19ccda9d5879ba&language=en-US`)
   .then((res) => {
     death_on_the_nile.value = res.data
   })
