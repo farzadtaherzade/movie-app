@@ -16,29 +16,40 @@
         :navigation="false"
         class="mySwiper"
       >
-        <swiper-slide v-for="movies in props.movie" :key="movies.id">
+        <swiper-slide v-for="movies in movie" :key="movies.id">
           <!-- {{movies}} -->
           <img
             :src="`https://image.tmdb.org/t/p/w500${movies.poster_path}`"
-            :alt="movies.title"
+            :alt="movies.name"
             class="cover-movie"
           />
           <div class="icons-wrapper">
             <div class="left-icon-area">
-              <img src="../assets/icons/save.png" alt="save movie" />
+              <img
+                src="../assets/icons/save.png"
+                alt="save movie"
+                v-if="!movies.value == '' ? false : true"
+                @click="addFavMovie(movies.id, movies.poster_path, movies.name)"
+              />
             </div>
             <div class="right-icon-area">
               <span class="number">
                 {{ movies.vote_average }}
-                <span style="font-size: 10px;">/10</span>
+                <span style="font-size: 10px">/10</span>
               </span>
               <span class="line"></span>
               <img src="../assets/icons/imdb.png" alt="imdb-logo" />
             </div>
           </div>
           <div class="link">
-            <router-link :to="{ name: 'Tvdetailpage', params: { id: movies.id } }">
-              <img src="../assets/icons/play.png" class="play-icon" alt="see movie" />
+            <router-link
+              :to="{ name: 'Tvdetailpage', params: { id: movies.id } }"
+            >
+              <img
+                src="../assets/icons/play.png"
+                class="play-icon"
+                alt="see movie"
+              />
             </router-link>
           </div>
         </swiper-slide>
@@ -53,6 +64,9 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 import { ref } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const slides = ref(5);
 const spaceSlides = ref(null);
@@ -94,8 +108,14 @@ window.addEventListener("resize", checkScreen);
 checkScreen();
 
 // get movies
-const props = defineProps(['movie', 'title'])
+const props = defineProps(["movie", "title"]);
 
+//
+function addFavMovie(id, poster, name) {
+  store.commit("addMovie", [id, poster, name, "isTv"]);
+  let dasd = props.movie.find((e) => e.id == id);
+  dasd.value = true;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -230,7 +250,7 @@ const props = defineProps(['movie', 'title'])
     cursor: pointer;
   }
 }
-.swiper-slide:last-child{
+.swiper-slide:last-child {
   margin-right: 202px;
 }
 .swiper-slide .cover-movie {
@@ -266,5 +286,8 @@ const props = defineProps(['movie', 'title'])
     border-radius: 2px;
     // margin-right: 20px;
   }
+}
+.not-show {
+  display: none;
 }
 </style>

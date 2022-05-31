@@ -3,10 +3,8 @@
         <h4>Made By Farzad</h4>
     </div>
 </template>
-<script>
-export default {
-    
-}
+<script setup>
+
 </script>
 <style lang="scss" scoped>
 .footer {
