@@ -241,7 +241,7 @@ nav {
         }
         .fav-icon {
           position: absolute;
-          top:10px;
+          top:5px;
           right:250px;
           display: flex;
           align-items: center;
