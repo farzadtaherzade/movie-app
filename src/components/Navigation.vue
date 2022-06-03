@@ -242,7 +242,7 @@ nav {
         .fav-icon {
           position: absolute;
           top:20px;
-          right:100px;
+          right:200px;
           display: flex;
           align-items: center;
           justify-content: center;
