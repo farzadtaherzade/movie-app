@@ -240,6 +240,9 @@ nav {
           }
         }
         .fav-icon {
+          position: absolute;
+          top:20px;
+          right:100px;
           display: flex;
           align-items: center;
           justify-content: center;
