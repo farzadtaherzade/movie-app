@@ -44,7 +44,7 @@
           <router-link
             :to="{ name: 'favorites' }"
             class="fav-icon"
-            v-if="$store.state.isAuthenticated"
+            v-if="true"
           >
             <div class="num">
               <small v-if="$store.state.resultData.length < 1">0</small>
