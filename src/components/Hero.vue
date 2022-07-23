@@ -91,7 +91,7 @@ axios
 <template>
   <div class="hero">
     <swiper class="mySwiper">
-      <swiper-slide :style="{ 'background-image': `url(https://i.ibb.co/r2fdXH0/moonfall.jpg)` }">
+      <swiper-slide :style="{ 'background-image': `url(https://images3.alphacoders.com/120/thumb-1920-1208433.jpg)` }">
         <div class="movies-info">
           <div class="left">
             <h1>{{ moonfall.title }}</h1>
@@ -114,7 +114,7 @@ axios
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide :style="{ 'background-image': `url(https://i.ibb.co/7Jy8fBZ/Turning-Redjpg.jpg)` }">
+      <swiper-slide :style="{ 'background-image': `url(https://images.alphacoders.com/121/thumb-1920-1212063.jpg)` }">
         <div class="movies-info">
           <div class="left">
             <h1>{{ turning.title }}</h1>
@@ -139,7 +139,7 @@ axios
         </div>
       </swiper-slide>
       <swiper-slide
-        :style="{ 'background-image': `url(https://i.ibb.co/qsTFNQW/Batman-And-Catwoman-In-The-Batman-Movie-2022-Ji-G.jpg)` }">
+        :style="{ 'background-image': `url(https://images2.alphacoders.com/120/thumb-1920-1209249.jpg)` }">
         <div class="movies-info">
           <div class="left">
             <h1>{{ the_batman.title }}</h1>
@@ -164,7 +164,7 @@ axios
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide :style="{ 'background-image': `url(https://i.ibb.co/XX5YNZF/spider.jpg)` }">
+      <swiper-slide :style="{ 'background-image': `url(https://images2.alphacoders.com/117/thumb-1920-1170277.jpg)` }">
         <div class="movies-info">
           <div class="left">
             <h1>{{ spider.title }}</h1>
@@ -189,7 +189,7 @@ axios
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide :style="{ 'background-image': `url(https://i.ibb.co/4YtM60y/death-on-the-nile.jpg)` }">
+      <swiper-slide :style="{ 'background-image': `url(https://images7.alphacoders.com/121/thumbbig-1210134.webp)` }">
         <div class="movies-info">
           <div class="left">
             <h1>{{ death_on_the_nile.title }}</h1>
